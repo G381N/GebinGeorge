@@ -1,0 +1,9 @@
+<!ELEMENT services (service+)>
+<!ELEMENT service (id, name, price, duration, description, category, availability)>
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT price (#PCDATA)>
+<!ELEMENT duration (#PCDATA)>
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT category (#PCDATA)>
+<!ELEMENT availability (#PCDATA)>
