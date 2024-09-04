@@ -1,22 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!-- Root element 'services' containing multiple 'service' elements -->
     <xs:element name="services">
         <xs:complexType>
             <xs:sequence>
+                <!-- Each 'service' element has a complex structure -->
                 <xs:element name="service" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="id" type="xs:string"/>
+                            <!-- Validation: ID should be an integer -->
+                            <xs:element name="id" type="xs:integer"/>
+
+                            <!-- Validation: Name should be a string -->
                             <xs:element name="name" type="xs:string"/>
-                            <xs:element name="price" type="xs:string"/>
-                            <xs:element name="duration" type="xs:string"/>
+
+                            <!-- Validation: Price should be a decimal between $5.00 and $500.00 -->
+                            <xs:element name="price">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:decimal">
+                                        <xs:minInclusive value="5.00"/>
+                                        <xs:maxInclusive value="500.00"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+
+                            <!-- Validation: Duration should be in ISO 8601 format -->
+                            <xs:element name="duration" type="xs:duration"/>
+
+                            <!-- Validation: Description should be a string -->
                             <xs:element name="description" type="xs:string"/>
+
+                            <!-- Validation: Category should be a string -->
                             <xs:element name="category" type="xs:string"/>
-                            <xs:element name="availability" type="xs:string"/>
+
+                            <!-- Validation: Availability should be either 'Available' or 'Unavailable' -->
+                            <xs:element name="availability">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="Available"/>
+                                        <xs:enumeration value="Unavailable"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
 </xs:schema>

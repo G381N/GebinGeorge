@@ -66,6 +66,26 @@
             height: auto;
             border-radius: 10px;
         }
+        
+        .form-control.invalid {
+            border-color: red;
+        }
+        
+        .form-control.valid {
+            border-color: green;
+        }
+        
+        .form-message {
+            color: red;
+            font-size: 0.875rem;
+            margin-top: 5px;
+        }
+        
+        .switch-text {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
     </style>
 </head>
 
@@ -97,30 +117,59 @@
     </nav>
     <!-- Navbar End -->
 
-    <!-- Login Start -->
+    <!-- Login/Register Start -->
     <div class="container my-5">
         <div class="login-container">
-            <h2 class="text-center">Login</h2>
+            <h2 class="text-center" id="formTitle">Login</h2>
             <img src="./img/hero.svg" alt="Login Image">
-            <form id="loginForm">
+            <form id="authForm">
+                <div id="registerFields" class="d-none">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="Enter your first name">
+                        <div id="firstNameMessage" class="form-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="Enter your last name">
+                        <div id="lastNameMessage" class="form-message"></div>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="email">Email Address</label>
                     <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                    <div id="emailMessage" class="form-message"></div>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                    <div id="passwordMessage" class="form-message"></div>
+                </div>
+                <div id="registerFieldsExtended" class="d-none">
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password">
+                        <div id="confirmPasswordMessage" class="form-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" class="form-control" id="dob" placeholder="Enter your date of birth">
+                        <div id="dobMessage" class="form-message"></div>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                    <input type="checkbox" id="showPassword"> Show Password
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary w-100" id="submitButton">Login</button>
                 </div>
                 <div class="text-center mt-3">
-                    <a href="#" class="text-primary">Forgot Password?</a>
+                    <span class="switch-text" id="switchText">Don't have an account? <a href="#" id="toggleForm">Register</a></span>
                 </div>
             </form>
         </div>
     </div>
-    <!-- Login End -->
+    <!-- Login/Register End -->
 
     <!-- Modal -->
     <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
@@ -131,7 +180,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Please fill in all fields.
+                    Please fill in all fields correctly.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
@@ -198,7 +247,7 @@
             </div>
         </div>
     </div>
-    <!-- Footer End -->
+    <!-- ... Footer content ... -->
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -211,27 +260,171 @@
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/counterup/counterup.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
-
-    <!-- Custom JavaScript for Validation -->
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleForm = document.getElementById('toggleForm');
+            const formTitle = document.getElementById('formTitle');
+            const registerFields = document.getElementById('registerFields');
+            const registerFieldsExtended = document.getElementById('registerFieldsExtended');
+            const submitButton = document.getElementById('submitButton');
+            const switchText = document.getElementById('switchText');
+            const authForm = document.getElementById('authForm');
 
-            if (!email || !password) {
-                var alertModal = new bootstrap.Modal(document.getElementById('alertModal'), {});
-                alertModal.show();
-            } else {
-                // Handle form submission
-                window.location.href = 'data.html'; // Redirect to data.html
+            const firstName = document.getElementById('firstName');
+            const lastName = document.getElementById('lastName');
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const dob = document.getElementById('dob');
+            const showPasswordCheckbox = document.getElementById('showPassword');
+
+            const firstNameMessage = document.getElementById('firstNameMessage');
+            const lastNameMessage = document.getElementById('lastNameMessage');
+            const emailMessage = document.getElementById('emailMessage');
+            const passwordMessage = document.getElementById('passwordMessage');
+            const confirmPasswordMessage = document.getElementById('confirmPasswordMessage');
+            const dobMessage = document.getElementById('dobMessage');
+
+            let isRegisterMode = false;
+
+            function validateName(name) {
+                const regex = /^[A-Z\s]+$/;
+                return regex.test(name);
             }
+
+            function validatePassword(password) {
+                const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                return regex.test(password);
+            }
+
+            function validateDOB(dob) {
+                const today = new Date();
+                const birthDate = new Date(dob);
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const month = today.getMonth() - birthDate.getMonth();
+                if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                return age >= 18;
+            }
+
+            function validateForm() {
+                let isValid = true;
+
+                // Clear previous errors
+                document.querySelectorAll('.form-error').forEach(el => el.textContent = '');
+                [firstName, lastName, email, password, confirmPassword, dob].forEach(field => field.classList.remove('invalid'));
+
+                if (isRegisterMode) {
+                    if (!validateName(firstName.value)) {
+                        firstName.classList.add('invalid');
+                        firstNameMessage.textContent = 'First name must be in capital letters and alphabetic.';
+                        isValid = false;
+                    }
+
+                    if (!validateName(lastName.value)) {
+                        lastName.classList.add('invalid');
+                        lastNameMessage.textContent = 'Last name must be in capital letters and alphabetic.';
+                        isValid = false;
+                    }
+
+                    if (!validatePassword(password.value)) {
+                        password.classList.add('invalid');
+                        passwordMessage.textContent = 'Password must be at least 11 characters long, include uppercase, lowercase, and special characters.';
+                        isValid = false;
+                    }
+
+                    if (password.value !== confirmPassword.value) {
+                        confirmPassword.classList.add('invalid');
+                        confirmPasswordMessage.textContent = 'Passwords do not match.';
+                        isValid = false;
+                    }
+
+                    if (!validateDOB(dob.value)) {
+                        dob.classList.add('invalid');
+                        dobMessage.textContent = 'You must be at least 18 years old to register.';
+                        isValid = false;
+                    }
+                } else {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(email.value)) {
+                        email.classList.add('invalid');
+                        emailMessage.textContent = 'Invalid email format.';
+                        isValid = false;
+                    }
+
+                    if (!validatePassword(password.value)) {
+                        password.classList.add('invalid');
+                        passwordMessage.textContent = 'Password must be at least 11 characters long, include uppercase, lowercase, and special characters.';
+                        isValid = false;
+                    }
+                }
+
+                return isValid;
+            }
+
+            function switchFormMode() {
+                isRegisterMode = !isRegisterMode;
+                if (isRegisterMode) {
+                    formTitle.textContent = 'Register';
+                    registerFields.classList.remove('d-none');
+                    registerFieldsExtended.classList.remove('d-none');
+                    submitButton.textContent = 'Register';
+                    switchText.innerHTML = `Already have an account? <a href="" id="toggleForm">Login</a>`;
+                } else {
+                    formTitle.textContent = 'Login';
+                    registerFields.classList.add('d-none');
+                    registerFieldsExtended.classList.add('d-none');
+                    submitButton.textContent = 'Login';
+                    switchText.innerHTML = `Don't have an account? <a href="#" id="toggleForm">Register</a>`;
+                }
+            }
+
+            function togglePasswordVisibility() {
+                if (showPasswordCheckbox.checked) {
+                    password.type = 'text';
+                    if (confirmPassword) {
+                        confirmPassword.type = 'text';
+                    }
+                } else {
+                    password.type = 'password';
+                    if (confirmPassword) {
+                        confirmPassword.type = 'password';
+                    }
+                }
+            }
+
+            function clearErrorMessages() {
+                document.querySelectorAll('.form-error').forEach(el => el.textContent = '');
+                [firstName, lastName, email, password, confirmPassword, dob].forEach(field => field.classList.remove('invalid'));
+            }
+
+            toggleForm.addEventListener('click', function(event) {
+                event.preventDefault();
+                switchFormMode();
+            });
+
+            showPasswordCheckbox.addEventListener('change', togglePasswordVisibility);
+
+            // Clear error messages on input change
+            [firstName, lastName, email, password, confirmPassword, dob].forEach(field => {
+                field.addEventListener('input', clearErrorMessages);
+            });
+
+            authForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const isValid = validateForm();
+                if (isValid) {
+                    // Proceed with redirection to data.html if the form is valid
+                    window.location.href = 'data.html';
+                } else {
+                    // Show validation errors
+                    $('#alertModal').modal('show');
+                }
+            });
+
         });
     </script>
 

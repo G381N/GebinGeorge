@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE services SYSTEM "car_service.dtd">
-<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="car_service.xsd">
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="car_service.xsd">
     <service>
         <id>1</id>
         <name>Engine Check</name>
-        <price>$50</price>
-        <duration>1 hour</duration>
+        <price>50.00</price>
+        <duration>PT1H</duration>
         <description>Complete engine diagnostic and inspection.</description>
         <category>Engine</category>
         <availability>Available</availability>
@@ -14,46 +12,64 @@
     <service>
         <id>2</id>
         <name>Oil Change</name>
-        <price>$30</price>
-        <duration>30 minutes</duration>
+        <price>30.00</price>
+        <duration>PT30M</duration>
         <description>Replace old oil and filter with new ones.</description>
         <category>Maintenance</category>
         <availability>Available</availability>
     </service>
     <service>
         <id>3</id>
-        <name>Brake Service</name>
-        <price>$70</price>
-        <duration>1.5 hours</duration>
-        <description>Inspection and replacement of brake pads and discs.</description>
-        <category>Brakes</category>
-        <availability>Available</availability>
-    </service>
-    <service>
-        <id>4</id>
-        <name>Transmission Fluid Change</name>
-        <price>$90</price>
-        <duration>1 hour</duration>
-        <description>Replace old transmission fluid with new fluid.</description>
-        <category>Transmission</category>
-        <availability>Available</availability>
-    </service>
-    <service>
-        <id>5</id>
-        <name>Air Filter Replacement</name>
-        <price>$25</price>
-        <duration>20 minutes</duration>
-        <description>Replace old air filter with a new one to ensure clean air intake.</description>
+        <name>Tire Rotation</name>
+        <price>20.00</price>
+        <duration>PT45M</duration>
+        <description>Rotate tires to ensure even wear.</description>
         <category>Maintenance</category>
         <availability>Available</availability>
     </service>
     <service>
-        <id>6</id>
-        <name>Tire Rotation</name>
-        <price>$40</price>
-        <duration>30 minutes</duration>
-        <description>Rotate tires to ensure even wear and extend tire life.</description>
-        <category>Tires</category>
+        <id>4</id>
+        <name>Brake Inspection</name>
+        <price>40.00</price>
+        <duration>PT1H</duration>
+        <description>Inspect brake pads, discs, and fluids.</description>
+        <category>Brakes</category>
         <availability>Available</availability>
+    </service>
+    <service>
+        <id>5</id>
+        <name>Battery Replacement</name>
+        <price>100.00</price>
+        <duration>PT30M</duration>
+        <description>Replace car battery with a new one.</description>
+        <category>Electrical</category>
+        <availability>Available</availability>
+    </service>
+    <service>
+        <id>6</id>
+        <name>Transmission Service</name>
+        <price>150.00</price>
+        <duration>PT3H</duration>
+        <description>Complete transmission fluid change and inspection.</description>
+        <category>Transmission</category>
+        <availability>Unavailable</availability>
+    </service>
+    <service>
+        <id>7</id>
+        <name>Wheel Alignment</name>
+        <price>70.00</price>
+        <duration>PT1H30M</duration>
+        <description>Adjust the angles of the wheels to the manufacturer's specifications.</description>
+        <category>Maintenance</category>
+        <availability>Available</availability>
+    </service>
+    <service>
+        <id>8</id>
+        <name>Air Conditioning Service</name>
+        <price>60.00</price>
+        <duration>PT1H</duration>
+        <description>Inspect and recharge air conditioning system.</description>
+        <category>Climate Control</category>
+        <availability>Unavailable</availability>
     </service>
 </services>
