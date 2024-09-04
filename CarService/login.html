@@ -127,34 +127,34 @@
                     <div class="form-group">
                         <label for="firstName">First Name</label>
                         <input type="text" class="form-control" id="firstName" placeholder="Enter your first name">
-                        <div id="firstNameMessage" class="form-message"></div>
+                        <div id="firstNameMessage" class="form-message form-error"></div>
                     </div>
                     <div class="form-group">
                         <label for="lastName">Last Name</label>
                         <input type="text" class="form-control" id="lastName" placeholder="Enter your last name">
-                        <div id="lastNameMessage" class="form-message"></div>
+                        <div id="lastNameMessage" class="form-message form-error"></div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="email">Email Address</label>
                     <input type="email" class="form-control" id="email" placeholder="Enter your email">
-                    <div id="emailMessage" class="form-message"></div>
+                    <div id="emailMessage" class="form-message form-error"></div>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" placeholder="Enter your password">
-                    <div id="passwordMessage" class="form-message"></div>
+                    <div id="passwordMessage" class="form-message form-error"></div>
                 </div>
                 <div id="registerFieldsExtended" class="d-none">
                     <div class="form-group">
                         <label for="confirmPassword">Confirm Password</label>
                         <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password">
-                        <div id="confirmPasswordMessage" class="form-message"></div>
+                        <div id="confirmPasswordMessage" class="form-message form-error"></div>
                     </div>
                     <div class="form-group">
                         <label for="dob">Date of Birth</label>
                         <input type="date" class="form-control" id="dob" placeholder="Enter your date of birth">
-                        <div id="dobMessage" class="form-message"></div>
+                        <div id="dobMessage" class="form-message form-error"></div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -290,12 +290,12 @@
             let isRegisterMode = false;
 
             function validateName(name) {
-                const regex = /^[A-Z\s]+$/;
+                const regex = /^[a-zA-Z\s]+$/;
                 return regex.test(name);
             }
 
             function validatePassword(password) {
-                const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{11,}$/;
                 return regex.test(password);
             }
 
@@ -314,19 +314,19 @@
                 let isValid = true;
 
                 // Clear previous errors
-                document.querySelectorAll('.form-error').forEach(el => el.textContent = '');
+                document.querySelectorAll('.form-message').forEach(el => el.textContent = '');
                 [firstName, lastName, email, password, confirmPassword, dob].forEach(field => field.classList.remove('invalid'));
 
                 if (isRegisterMode) {
                     if (!validateName(firstName.value)) {
                         firstName.classList.add('invalid');
-                        firstNameMessage.textContent = 'First name must be in capital letters and alphabetic.';
+                        firstNameMessage.textContent = 'First name must be alphabetic.';
                         isValid = false;
                     }
 
                     if (!validateName(lastName.value)) {
                         lastName.classList.add('invalid');
-                        lastNameMessage.textContent = 'Last name must be in capital letters and alphabetic.';
+                        lastNameMessage.textContent = 'Last name must be alphabetic.';
                         isValid = false;
                     }
 
@@ -372,7 +372,7 @@
                     registerFields.classList.remove('d-none');
                     registerFieldsExtended.classList.remove('d-none');
                     submitButton.textContent = 'Register';
-                    switchText.innerHTML = `Already have an account? <a href="" id="toggleForm">Login</a>`;
+                    switchText.innerHTML = `Already have an account? <a href="#" id="toggleForm">Login</a>`;
                 } else {
                     formTitle.textContent = 'Login';
                     registerFields.classList.add('d-none');
@@ -397,7 +397,7 @@
             }
 
             function clearErrorMessages() {
-                document.querySelectorAll('.form-error').forEach(el => el.textContent = '');
+                document.querySelectorAll('.form-message').forEach(el => el.textContent = '');
                 [firstName, lastName, email, password, confirmPassword, dob].forEach(field => field.classList.remove('invalid'));
             }
 
@@ -408,9 +408,66 @@
 
             showPasswordCheckbox.addEventListener('change', togglePasswordVisibility);
 
-            // Clear error messages on input change
-            [firstName, lastName, email, password, confirmPassword, dob].forEach(field => {
-                field.addEventListener('input', clearErrorMessages);
+            // Validate fields on input change
+            firstName.addEventListener('input', function() {
+                if (!validateName(firstName.value)) {
+                    firstName.classList.add('invalid');
+                    firstNameMessage.textContent = 'First name must be alphabetic.';
+                } else {
+                    firstName.classList.remove('invalid');
+                    firstNameMessage.textContent = '';
+                }
+            });
+
+            lastName.addEventListener('input', function() {
+                if (!validateName(lastName.value)) {
+                    lastName.classList.add('invalid');
+                    lastNameMessage.textContent = 'Last name must be alphabetic.';
+                } else {
+                    lastName.classList.remove('invalid');
+                    lastNameMessage.textContent = '';
+                }
+            });
+
+            email.addEventListener('input', function() {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email.value)) {
+                    email.classList.add('invalid');
+                    emailMessage.textContent = 'Invalid email format.';
+                } else {
+                    email.classList.remove('invalid');
+                    emailMessage.textContent = '';
+                }
+            });
+
+            password.addEventListener('input', function() {
+                if (!validatePassword(password.value)) {
+                    password.classList.add('invalid');
+                    passwordMessage.textContent = 'Password must be at least 11 characters long, include uppercase, lowercase, and special characters.';
+                } else {
+                    password.classList.remove('invalid');
+                    passwordMessage.textContent = '';
+                }
+            });
+
+            confirmPassword.addEventListener('input', function() {
+                if (confirmPassword.value !== password.value) {
+                    confirmPassword.classList.add('invalid');
+                    confirmPasswordMessage.textContent = 'Passwords do not match.';
+                } else {
+                    confirmPassword.classList.remove('invalid');
+                    confirmPasswordMessage.textContent = '';
+                }
+            });
+
+            dob.addEventListener('input', function() {
+                if (!validateDOB(dob.value)) {
+                    dob.classList.add('invalid');
+                    dobMessage.textContent = 'You must be at least 18 years old to register.';
+                } else {
+                    dob.classList.remove('invalid');
+                    dobMessage.textContent = '';
+                }
             });
 
             authForm.addEventListener('submit', function(event) {
@@ -424,7 +481,6 @@
                     $('#alertModal').modal('show');
                 }
             });
-
         });
     </script>
 
