@@ -1,0 +1,78 @@
+[{
+        "id": "bbc-news",
+        "name": "BBC News",
+        "author": "BBC News Staff",
+        "title": "Ukraine War: Russian Forces Withdraw from Key City",
+        "description": "Russian forces have withdrawn from a strategic city in eastern Ukraine, marking a significant shift in the ongoing conflict.",
+        "url": "https://news.sky.com/story/ukraine-war-latest-russian-drones-stray-onto-nato-soil-as-moscow-claims-to-have-control-of-town-just-15km-from-key-city-12541713",
+        "urlToImage": "https://e3.365dm.com/24/09/1600x900/skynews-pokrovsk-russia-ukraine_6679471.png?20240908093922",
+        "publishedAt": "2024-09-10T07:00:00Z",
+        "content": "In a major development in the Ukraine conflict, Russian forces have pulled out of a key city in the east, marking a turning point in the ongoing war. The strategic city, previously a focal point of military operations, is now under Ukrainian control. This move raises questions about the future dynamics of the conflict and the potential implications for peace negotiations."
+    },
+    {
+        "id": "cnn-news",
+        "name": "CNN",
+        "author": "CNN Staff",
+        "title": "Apple Unveils Latest iPhone with Advanced Features",
+        "description": "Apple has announced its latest iPhone model with new features including enhanced camera capabilities and a faster processor.",
+        "url": "https://www.cnn.com/tech/apple-unveils-latest-iphone-2024/index.html",
+        "urlToImage": "https://cdn.cnn.com/cnnnext/dam/assets/220927145042-apple-event-2024-iphone.jpg",
+        "publishedAt": "2024-09-09T10:00:00Z",
+        "content": "Apple has unveiled its latest iPhone, featuring cutting-edge advancements such as a state-of-the-art camera system and a significantly faster processor. The new model aims to set a new benchmark in the smartphone industry with its improved performance and innovative technology. The announcement has generated considerable excitement among tech enthusiasts and consumers alike."
+    },
+    {
+        "id": "livelaw-news",
+        "name": "Live Law",
+        "author": "Live Law Staff",
+        "title": "Kolkata Doctor's Rape and Murder - Live Updates",
+        "description": "Live updates from the Supreme Court on the Kolkata doctor's rape and murder case.",
+        "url": "https://www.livelaw.in/top-stories/kolkata-doctors-rape-murder-live-updates-from-supreme-court-rg-kar-hospital-case-268944",
+        "urlToImage": "https://www.livelaw.in/h-upload/2024/09/09/750x450_560067-0df28071-4dc3-4524-87dc-0882ac563dc1.webp",
+        "publishedAt": "2024-09-09T08:00:00Z",
+        "content": "The Supreme Court has been actively reviewing the Kolkata doctor's rape and murder case, providing live updates on the proceedings. The case has garnered significant attention due to its severity and the involvement of high-profile legal teams. The updates include key testimonies, legal arguments, and ongoing developments in the case as it progresses through the judicial system."
+    },
+    {
+        "id": "hindustan-times",
+        "name": "Hindustan Times",
+        "author": "Hindustan Times Staff",
+        "title": "Army Foils Infiltration Bid in J&K's Nowshera",
+        "description": "Two terrorists killed in an infiltration bid foiled by the army in Nowshera.",
+        "url": "https://www.hindustantimes.com/india-news/army-foils-infiltration-bid-in-j-ks-nowshera-two-terrorists-killed-101725846179073.html",
+        "urlToImage": "https://www.hindustantimes.com/ht-img/img/2024/09/09/550x309/A-terrorist-was-killed-by-security-forces-in-an-on_1719412741426_1725846641791.jpg",
+        "publishedAt": "2024-09-09T07:00:00Z",
+        "content": "The Indian Army has successfully thwarted an infiltration attempt in Nowshera, Jammu and Kashmir. The operation resulted in the elimination of two terrorists who were attempting to breach the security barriers. This incident underscores the ongoing challenges faced by security forces in the region and their continued efforts to maintain peace and security."
+    },
+    {
+        "id": "the-guardian",
+        "name": "The Guardian",
+        "author": "The Guardian Staff",
+        "title": "Major Tech Companies Face Scrutiny Over Privacy Practices",
+        "description": "Tech giants are under scrutiny as regulatory bodies investigate their data privacy practices and user protection measures.",
+        "url": "https://www.theguardian.com/technology/2024/sep/06/tech-companies-privacy-scrutiny",
+        "urlToImage": "https://media.theguardian.com/technology/images/privacy-scrutiny.jpg",
+        "publishedAt": "2024-09-06T09:30:00Z",
+        "content": "Regulatory authorities are ramping up their investigations into the privacy practices of major tech companies. The scrutiny focuses on how these corporations handle user data, protect personal information, and comply with data protection regulations. This increased oversight aims to address growing concerns about data breaches and privacy violations in the tech industry."
+    },
+    {
+        "id": "forbes",
+        "name": "Forbes",
+        "author": "Forbes Staff",
+        "title": "Innovations in AI: What to Expect in the Coming Years",
+        "description": "Explore the latest innovations in artificial intelligence and what the future holds for this rapidly evolving technology.",
+        "url": "https://www.forbes.com/technology/2024/ai-innovations-future",
+        "urlToImage": "https://www.forbes.com/images/ai-innovations.jpg",
+        "publishedAt": "2024-09-05T11:00:00Z",
+        "content": "Artificial intelligence is set to undergo transformative changes in the coming years, with advancements promising to revolutionize various sectors. This article explores the latest breakthroughs in AI technology, including advancements in machine learning, natural language processing, and automation. The future of AI holds exciting possibilities for innovation and disruption across industries."
+    },
+    {
+        "id": "reuters",
+        "name": "Reuters",
+        "author": "Reuters Staff",
+        "title": "Global Economic Outlook: Key Trends and Predictions",
+        "description": "An overview of the global economic outlook, including key trends and predictions for the coming months.",
+        "url": "https://www.reuters.com/business/global-economic-outlook-september-2024",
+        "urlToImage": "https://cdn.reuters.com/news/images/global-economic-outlook.jpg",
+        "publishedAt": "2024-09-04T08:15:00Z",
+        "content": "This report provides a comprehensive overview of the global economic outlook, highlighting significant trends and forecasts for the upcoming months. The analysis covers various economic indicators, including GDP growth, inflation rates, and market trends, offering insights into potential challenges and opportunities for economies worldwide."
+    }
+]
