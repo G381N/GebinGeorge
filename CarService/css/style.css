@@ -390,3 +390,83 @@
     padding-right: 0;
     border-right: none;
 }
+
+
+/* Card Styles */
+
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card-img-top {
+    height: 250px;
+    object-fit: cover;
+}
+
+.card-body {
+    flex: 1;
+    /* Ensures card body takes up remaining space */
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-text {
+    color: #555;
+    flex: 1;
+    /* Allows text to take up space and push footer if needed */
+}
+
+
+/* Hover Effects */
+
+.card:hover {
+    transform: scale(1.03);
+    transition: transform 0.3s ease;
+}
+
+
+/* Container and Row Styles */
+
+.container {
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-lg-4,
+.col-md-6 {
+    display: flex;
+    align-items: stretch;
+    /* Ensures all columns are of equal height */
+}
+
+
+/* Pagination Buttons Styling */
+
+#pagination button {
+    margin: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+#pagination .active {
+    background-color: #007bff;
+    color: white;
+}
