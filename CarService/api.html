@@ -108,28 +108,26 @@
     <div class="container-fluid page-header mb-5 p-0" style="background-image: url(img/carousel-bg-1.jpg);">
         <div class="container-fluid page-header-inner py-5">
             <div class="container text-center">
-                <h1 class="display-3 text-white mb-3 animated slideInDown">Books</h1>
+                <h1 class="display-3 text-white mb-3 animated slideInDown">News</h1>
             </div>
         </div>
     </div>
     <!-- Page Header End -->
 
-    <!-- Books Section Start -->
+    <!-- News Section Start -->
     <div class="container-fluid py-5">
         <div class="container">
-            <h1 class="display-5 text-center mb-5">Book Catalogue</h1>
+            <h1 class="display-5 text-center mb-5">Headlines</h1>
 
             <!-- Controls for sorting and filtering -->
             <div class="controls text-center mb-4">
-                <input type="text" id="filter-input" placeholder="Filter by title or author..." class="form-control w-50 mx-auto mb-3">
+                <input type="text" id="filter-input" placeholder="Filter by title..." class="form-control w-50 mx-auto mb-3">
                 <button id="sort-title" class="btn btn-primary me-2">Sort by Title</button>
-                <button id="sort-author" class="btn btn-primary me-2">Sort by Author</button>
                 <button id="sort-az" class="btn btn-primary me-2">Sort A-Z</button>
                 <button id="sort-za" class="btn btn-primary">Sort Z-A</button>
             </div>
 
-
-            <!-- Books List Container -->
+            <!-- News List Container -->
             <div id="booklist" class="row">
                 <div id="loading" class="col-12 text-center">
                     <div class="spinner-border text-primary" role="status">
@@ -142,8 +140,7 @@
             <div id="pagination" class="text-center mt-4"></div>
         </div>
     </div>
-    <!-- Books Section End -->
-
+    <!-- News Section End -->
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -224,62 +221,50 @@
 
     <!-- Main JavaScript Logic for Books API -->
     <script>
-        const baseURL = "https://api.nytimes.com/svc/books/v3/lists/2019-01-20/hardcover-fiction.json?api-key=QTd4H7HDVpLKhqIqtV42NmAthrt8ub4b";
+        const baseURL = "https://newsapi.org/v2/top-headlines?country=us&apiKey=473751321b0e4a51aaccd1bc3ebf40be"; // Update with your news API URL
 
-        let booklist = [];
-        let filteredBooks = [];
+        let articleList = [];
+        let filteredArticles = [];
         let currentPage = 1;
-        const booksPerPage = 6;
+        const articlesPerPage = 6;
 
         window.onload = () => {
-            // Fetch the books when the page loads
-            fetchBooks();
+            // Fetch the news articles when the page loads
+            fetchArticles();
 
             // Event listener for sorting by title
             document.getElementById("sort-title").addEventListener('click', () => {
-                filteredBooks.sort((a, b) => a.title.localeCompare(b.title));
-                displayBooks();
+                filteredArticles.sort((a, b) => a.title.localeCompare(b.title));
+                displayArticles();
             });
 
             // Event listener for sorting by author
             document.getElementById("sort-author").addEventListener('click', () => {
-                filteredBooks.sort((a, b) => a.author.localeCompare(b.author));
-                displayBooks();
+                filteredArticles.sort((a, b) => a.author.localeCompare(b.author));
+                displayArticles();
             });
 
-            // Event listener for sorting A-Z
-            document.getElementById("sort-az").addEventListener('click', () => {
-                filteredBooks.sort((a, b) => a.title.localeCompare(b.title));
-                displayBooks();
-            });
-
-            // Event listener for sorting Z-A
-            document.getElementById("sort-za").addEventListener('click', () => {
-                filteredBooks.sort((a, b) => b.title.localeCompare(a.title));
-                displayBooks();
-            });
-
-            // Event listener for filtering books by title or author
+            // Event listener for filtering articles by title or author
             document.getElementById("filter-input").addEventListener('input', (e) => {
                 const query = e.target.value.toLowerCase();
-                filteredBooks = booklist.filter(book =>
-                    book.title.toLowerCase().includes(query) ||
-                    book.author.toLowerCase().includes(query)
+                filteredArticles = articleList.filter(article =>
+                    article.title.toLowerCase().includes(query) ||
+                    (article.author && article.author.toLowerCase().includes(query)) // Check for author existence
                 );
                 currentPage = 1; // Reset to first page
-                displayBooks();
+                displayArticles();
             });
         };
 
-        // Fetch books from the API
-        function fetchBooks() {
+        // Fetch articles from the API
+        function fetchArticles() {
             document.getElementById("loading").style.display = "block";
             fetch(baseURL)
                 .then(res => res.json())
                 .then(data => {
-                    booklist = data.results.books;
-                    filteredBooks = [...booklist]; // Start with all books
-                    displayBooks();
+                    articleList = data.articles; // Assuming the API returns articles in this format
+                    filteredArticles = [...articleList]; // Start with all articles
+                    displayArticles();
                     document.getElementById("loading").style.display = "none";
                 })
                 .catch(err => {
@@ -288,34 +273,34 @@
                 });
         }
 
-        // Display books on the page
-        function displayBooks() {
-            const bookListContainer = document.getElementById("booklist");
-            bookListContainer.innerHTML = ""; // Clear previous list
+        // Display articles on the page
+        function displayArticles() {
+            const articleListContainer = document.getElementById("booklist");
+            articleListContainer.innerHTML = ""; // Clear previous list
 
-            const start = (currentPage - 1) * booksPerPage;
-            const end = start + booksPerPage;
-            const currentBooks = filteredBooks.slice(start, end);
+            const start = (currentPage - 1) * articlesPerPage;
+            const end = start + articlesPerPage;
+            const currentArticles = filteredArticles.slice(start, end);
 
-            if (currentBooks.length === 0) {
-                bookListContainer.innerHTML = `<div class="col-12 text-center">No books found</div>`;
+            if (currentArticles.length === 0) {
+                articleListContainer.innerHTML = `<div class="col-12 text-center">No articles found</div>`;
                 return;
             }
 
-            currentBooks.forEach(book => {
-                const bookCard = `
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card">
-                        <img src="${book.book_image}" class="card-img-top" alt="${book.title}">
-                        <div class="card-body">
-                            <h5 class="card-title">${book.title}</h5>
-                            <p class="card-text"><strong>Author:</strong> ${book.author}</p>
-                            <p class="card-text">${book.description}</p>
+            currentArticles.forEach(article => {
+                const articleCard = `
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card">
+                            <img src="${article.urlToImage}" class="card-img-top" alt="${article.title}">
+                            <div class="card-body">
+                                <h5 class="card-title">${article.title}</h5>
+                                <p class="card-text"><strong>Author:</strong> ${article.author || "Unknown"}</p>
+                                <p class="card-text">${article.description}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `;
-                bookListContainer.innerHTML += bookCard;
+                `;
+                articleListContainer.innerHTML += articleCard;
             });
 
             updatePagination();
@@ -326,7 +311,7 @@
             const paginationContainer = document.getElementById("pagination");
             paginationContainer.innerHTML = ""; // Clear previous pagination
 
-            const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
+            const totalPages = Math.ceil(filteredArticles.length / articlesPerPage);
 
             for (let i = 1; i <= totalPages; i++) {
                 const pageButton = document.createElement('button');
@@ -334,7 +319,7 @@
                 pageButton.innerHTML = i;
                 pageButton.addEventListener('click', () => {
                     currentPage = i;
-                    displayBooks();
+                    displayArticles();
                 });
                 paginationContainer.appendChild(pageButton);
             }
